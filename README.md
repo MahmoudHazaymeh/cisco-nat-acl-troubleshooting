@@ -13,19 +13,19 @@ The network infrastructure connects a corporate LAN environment containing multi
 Attempting to access the HTTP web server (`8.8.8.8`) from PC1 initially resulted in a continuous `Request Timeout` error.
 * **Root Cause:** An incorrectly structured Extended Access List (ACL 100) on Router R1 was implicitly dropping return traffic, preventing the completion of the TCP three-way handshake.
 
-![Initial Failure](images/01.jpg)
+
 
 ### 2. Misconfigured Server Network Parameters
 During initial isolation, the target Web Server (Server0) was found to have an improper subnet mask and a completely missing gateway configuration (`0.0.0.0`).
 * **Root Cause:** The server was entirely incapable of routing return traffic out of its local segment back to the gateway router interface.
 
-![Misconfigured Server](images/02.jpg)
+
 
 ### 3. NAT Translation Validation Before Remediation
 Executing `show ip nat translations` on Router R1 yielded empty translation tables during live traffic stimulation.
 * **Root Cause:** Access List 1 was erroneously mapped to a non-existent network (`192.168.50.0`), and the PAT overload process was incorrectly bound to an inside interface instead of the outside serial link interface.
 
-![Empty NAT Tables](images/03.jpg)
+
 
 ---
 
